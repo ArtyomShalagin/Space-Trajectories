@@ -1,0 +1,6 @@
+*.pmap
+*.traj
+*.png
+out/*
+rep/*
+settings
