@@ -81,16 +81,23 @@ public class Emulator {
             this.curr = curr;
         }
 
-        //default OX projection
+//        //default OX projection
+//        private double proj(double ax, double ay, double az, double rad) {
+//            //module of the vector
+//            double a = sqrt(ax * ax + ay * ay + az * az);
+//            //angle between vector and XZ plane
+//            double angleXZ = atan2(ay, sqrt(ax * ax + az * az));
+//            //angle between projection on XZ and X
+//            double angleX = atan2(az, ax);
+//            //result is d_x = |d| * cos(phi) * cos(eta)
+//            double proj = rad * cos(angleXZ) * cos(angleX);
+//
+//            return proj;
+//        }
+
         private double proj(double ax, double ay, double az, double rad) {
-            //module of the vector
-            double a = sqrt(ax * ax + ay * ay + az * az);
-            //angle between vector and XZ plane
-            double angleXZ = atan2(ay, sqrt(ax * ax + az * az));
-            //angle between projection on XZ and X
-            double angleX = atan2(az, ax);
-            //result is d_x = |d| * cos(phi) * cos(eta)
-            double proj = rad * cos(angleXZ) * cos(angleX);
+            double c = ax / sqrt(ax * ax + ay * ay + az * az);
+            double proj = rad * c;
 
             return proj;
         }

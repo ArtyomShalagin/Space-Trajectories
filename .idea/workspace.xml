@@ -28,27 +28,14 @@
           <file leaf-file-name="View.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Shalagin/src/gui/View.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.23653089">
-                  <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+                <state vertical-scroll-proportion="0.43363994">
+                  <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#getMaxZ#0;class#View#0" expanded="false" />
                     <element signature="method#drawStatic#0;class#View#0" expanded="false" />
-                    <element signature="e#4392#4393#0" expanded="true" />
-                    <element signature="e#4414#4415#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Shalagin/src/Main.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#81#82#0" expanded="true" />
-                    <element signature="e#115#116#0" expanded="true" />
+                    <element signature="e#4432#4433#0" expanded="true" />
+                    <element signature="e#4454#4455#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -58,33 +45,12 @@
             <entry file="file://$PROJECT_DIR$/Shalagin/src/emulation/Emulator.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
+                  <caret line="132" column="67" selection-start-line="132" selection-start-column="67" selection-end-line="132" selection-end-column="67" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="method#setResult#0;class#Emulator#0" expanded="false" />
                     <element signature="method#setRungeKutta#0;class#Emulator#0" expanded="false" />
-                    <element signature="method#calc#0;class#Emulator#0" expanded="false" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Trajectory.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Shalagin/src/data/Trajectory.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="8" column="48" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="EmulationReport.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Shalagin/src/emulation/EmulationReport.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -93,26 +59,32 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="Reader.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Shalagin/src/io/Reader.java">
+          <file leaf-file-name="settings" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/settings">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.7043364">
-                  <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
+                <state vertical-scroll-proportion="0.019710906">
+                  <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+                  <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Logger.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Shalagin/src/io/Logger.java">
+          <file leaf-file-name="earth_moon.pmap" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/earth_moon.pmap">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-                  <folding>
-                    <element signature="method#getTime#0;class#Logger#0" expanded="false" />
-                  </folding>
+                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="first_space_speed.pmap" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/first_space_speed.pmap">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -143,9 +115,11 @@
         <option value="$PROJECT_DIR$/Shalagin/src/data/Trajectory.java" />
         <option value="$PROJECT_DIR$/Shalagin/src/io/Preferences.java" />
         <option value="$PROJECT_DIR$/Shalagin/src/Main.java" />
-        <option value="$PROJECT_DIR$/Shalagin/src/emulation/Emulator.java" />
         <option value="$PROJECT_DIR$/Shalagin/src/io/Reader.java" />
         <option value="$PROJECT_DIR$/Shalagin/src/io/Logger.java" />
+        <option value="$PROJECT_DIR$/first_space_speed.pmap" />
+        <option value="$PROJECT_DIR$/Shalagin/src/emulation/Emulator.java" />
+        <option value="$PROJECT_DIR$/settings" />
         <option value="$PROJECT_DIR$/Shalagin/src/gui/View.java" />
       </list>
     </option>
@@ -821,12 +795,12 @@
       <workItem from="1457270735965" duration="610000" />
       <workItem from="1325376311616" duration="25000" />
       <workItem from="1457286002467" duration="324000" />
-      <workItem from="1457288202647" duration="9515000" />
+      <workItem from="1457288202647" duration="12161000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10474000" />
+    <option name="totallyTimeSpent" value="13120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1916" height="1058" extended-state="6" />
@@ -886,8 +860,8 @@
             <element signature="imports" expanded="true" />
             <element signature="method#getMaxZ#0;class#View#0" expanded="false" />
             <element signature="method#drawStatic#0;class#View#0" expanded="false" />
-            <element signature="e#4392#4393#0" expanded="true" />
-            <element signature="e#4414#4415#0" expanded="true" />
+            <element signature="e#4432#4433#0" expanded="true" />
+            <element signature="e#4454#4455#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -947,33 +921,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Shalagin/src/emulation/Emulator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="20" selection-start-line="59" selection-start-column="20" selection-end-line="59" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#setResult#0;class#Emulator#0" expanded="false" />
-            <element signature="method#setRungeKutta#0;class#Emulator#0" expanded="false" />
-            <element signature="method#calc#0;class#Emulator#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Shalagin/src/gui/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23653089">
-          <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getMaxZ#0;class#View#0" expanded="false" />
-            <element signature="method#drawStatic#0;class#View#0" expanded="false" />
-            <element signature="e#4392#4393#0" expanded="true" />
-            <element signature="e#4414#4415#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Shalagin/src/io/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -986,10 +933,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Shalagin/src/io/Reader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7043364">
+        <state vertical-scroll-proportion="0.0">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_space_speed.pmap">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/earth_moon.pmap">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shalagin/src/emulation/Emulator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="67" selection-start-line="132" selection-start-column="67" selection-end-line="132" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#setResult#0;class#Emulator#0" expanded="false" />
+            <element signature="method#setRungeKutta#0;class#Emulator#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019710906">
+          <caret line="1" column="2" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Shalagin/src/gui/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43363994">
+          <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getMaxZ#0;class#View#0" expanded="false" />
+            <element signature="method#drawStatic#0;class#View#0" expanded="false" />
+            <element signature="e#4432#4433#0" expanded="true" />
+            <element signature="e#4454#4455#0" expanded="true" />
           </folding>
         </state>
       </provider>

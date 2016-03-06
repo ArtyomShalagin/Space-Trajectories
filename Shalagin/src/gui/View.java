@@ -20,6 +20,7 @@ public class View {
     int width, height;
     int numberOfSteps;
     double observableSpaceSize = 1e7;
+//    double observableSpaceSize = 6e8;
     double stepLength;
     JFrame frame;
     JPanel drawPanel;
