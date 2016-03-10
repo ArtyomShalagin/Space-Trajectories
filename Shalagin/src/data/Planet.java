@@ -9,7 +9,7 @@ public class Planet implements Gravitationable, Serializable {
     private Triple coords;
     private Triple speed;
     private double mass, rad;
-    private boolean isMovable;
+    private boolean isMovable, collided;
     private int id;
 
     public Planet(double x, double y, double z, double mass,
@@ -105,26 +105,24 @@ public class Planet implements Gravitationable, Serializable {
         return isMovable;
     }
 
+    public boolean collided() {
+        return collided;
+    }
+
+    public void setCollided() {
+        collided = true;
+    }
+
     public boolean equals(Object o) {
         if (o instanceof Planet)
             return equals((Planet) o);
         return false;
     }
 
-//    public boolean equals(Planet p) {
-//        return coords.get()[0] == p.coords.get()[0] &&
-//                coords.get()[1] == p.coords.get()[1] &&
-//                coords.get()[2] == p.coords.get()[2] && mass == p.mass;
-//    }
-
     public boolean equals(Planet p) {
         return id == p.id;
     }
 
-//    public int hashCode() {
-//        return (int) ((coords.hashCode() * 672 + speed.hashCode() * 562
-//                + mass * 784863) % Integer.MAX_VALUE);
-//    }
     public int hashCode() {
         return id;
     }

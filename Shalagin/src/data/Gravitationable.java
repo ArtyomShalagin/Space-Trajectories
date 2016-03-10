@@ -17,4 +17,6 @@ public interface Gravitationable {
     void setVZ(double d);
     double[] getCoords();
     boolean isMovable();
+    boolean collided();
+    void setCollided();
 }

@@ -36,23 +36,53 @@ public class Emulator {
         setResult(g, result);
     }
 
+    private static void checkCollisions(PlanetMap map) {
+        for (Gravitationable g1 : map.getElements()) {
+            for (Gravitationable g2 : map.getElements()) {
+                if (g1 == g2) {
+                    continue;
+                }
+                if (collided(g1, g2)) {
+                    g1.setCollided();
+                    g2.setCollided();
+                }
+            }
+        }
+    }
+
+    private static boolean collided(Gravitationable g1, Gravitationable g2) {
+        double dist = dist(g1.getCoords(), g2.getCoords());
+        return dist < g1.getRad() + g2.getRad();
+    }
+
+    private static double dist(double[] x1, double[] x2) {
+        return sqrt(pow(x1[0] - x2[0], 2) + pow(x1[1] - x2[1], 2)
+                + pow(x1[2] - x2[2], 2));
+    }
+
     public static EmulationReport emulate(PlanetMap map, long steps, double step) {
         long start = System.currentTimeMillis();
 
         EmulationReport rep = new EmulationReport(map);
 //        long steps = 5500000000L;
-//        int steps = 235872;
-//        steps = 1000000;
-//        int steps = 10;
-        long points = 100000;
-        long distBetweenPoints = max(steps / points, 1);
+        double distBetweenPoints = 100000;
         double currTime = 0;
-//        step = 10;
         for (long i = 0; i < steps; i++) {
+            checkCollisions(map);
             for (Gravitationable g : rep.getElements()) {
+                if (g.collided()) {
+                    continue;
+                }
                 calc(map, g, currTime, step);
-                if (i % distBetweenPoints == 0) {
-                    //add new point to g's traj
+
+                double dist;
+                if (rep.getTrajectory(g).size() != 0) {
+                    dist = dist(g.getCoords(), rep.getTrajectory(g).
+                            getPoint(rep.getTrajectory(g).size() - 1));
+                } else {
+                    dist = Double.MAX_VALUE;
+                }
+                if (dist > distBetweenPoints) {
                     rep.add(g, g.getCoords().clone());
                 }
                 currTime += step;
@@ -81,25 +111,10 @@ public class Emulator {
             this.curr = curr;
         }
 
-//        //default OX projection
-//        private double proj(double ax, double ay, double az, double rad) {
-//            //module of the vector
-//            double a = sqrt(ax * ax + ay * ay + az * az);
-//            //angle between vector and XZ plane
-//            double angleXZ = atan2(ay, sqrt(ax * ax + az * az));
-//            //angle between projection on XZ and X
-//            double angleX = atan2(az, ax);
-//            //result is d_x = |d| * cos(phi) * cos(eta)
-//            double proj = rad * cos(angleXZ) * cos(angleX);
-//
-//            return proj;
-//        }
-
         private double proj(double ax, double ay, double az, double rad) {
             double c = ax / sqrt(ax * ax + ay * ay + az * az);
-            double proj = rad * c;
 
-            return proj;
+            return rad * c;
         }
 
         private double projX(double ax, double ay, double az, double rad) {

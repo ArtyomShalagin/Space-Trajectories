@@ -1,7 +1,6 @@
 package data;
 
 import data_struct.Triple;
-import data_struct.TripleT;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +31,10 @@ public class Trajectory implements Serializable {
 
     public double[] getPoint(int ind) {
         return traj.get(ind).get();
+    }
+
+    public int size() {
+        return traj.size();
     }
 
     public boolean equals(Object o) {

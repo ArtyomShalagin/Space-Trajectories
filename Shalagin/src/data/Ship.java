@@ -5,7 +5,7 @@ import data_struct.Triple;
 public class Ship implements Gravitationable {
     private double mass, rad;
     private Triple speed, coords;
-    private boolean isMovable;
+    private boolean isMovable, collided;
 
     public Ship(double x, double y, double z, double mass, double rad) {
         coords = new Triple(x, y, z);
@@ -88,6 +88,14 @@ public class Ship implements Gravitationable {
 
     public boolean isMovable() {
         return isMovable;
+    }
+
+    public boolean collided() {
+        return collided;
+    }
+
+    public void setCollided() {
+        collided = true;
     }
 
     public boolean equals(Object o) {
