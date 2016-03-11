@@ -65,7 +65,9 @@ public class Emulator {
 
         EmulationReport rep = new EmulationReport(map);
 //        long steps = 5500000000L;
-        double distBetweenPoints = 100000;
+//        double distBetweenPoints = 100000;
+        long numberOfPoints = 100000;
+        long distBetweenPoints = max(steps / numberOfPoints, 1);
         double currTime = 0;
         for (long i = 0; i < steps; i++) {
             checkCollisions(map);
@@ -75,16 +77,21 @@ public class Emulator {
                 }
                 calc(map, g, currTime, step);
 
-                double dist;
-                if (rep.getTrajectory(g).size() != 0) {
-                    dist = dist(g.getCoords(), rep.getTrajectory(g).
-                            getPoint(rep.getTrajectory(g).size() - 1));
-                } else {
-                    dist = Double.MAX_VALUE;
-                }
-                if (dist > distBetweenPoints) {
+//                double dist;
+//                if (rep.getTrajectory(g).size() != 0) {
+//                    dist = dist(g.getCoords(), rep.getTrajectory(g).
+//                            getPoint(rep.getTrajectory(g).size() - 1));
+//                } else {
+//                    dist = Double.MAX_VALUE;
+//                }
+//                if (dist > distBetweenPoints) {
+//                    rep.add(g, g.getCoords().clone());
+//                }
+
+                if (i % distBetweenPoints == 0) {
                     rep.add(g, g.getCoords().clone());
                 }
+
                 currTime += step;
             }
             if (i % max(steps / 20, 1) == 0) {

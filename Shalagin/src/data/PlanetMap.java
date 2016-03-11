@@ -2,10 +2,11 @@ package data;
 
 import data_struct.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlanetMap {
+public class PlanetMap implements Serializable {
     private ArrayList<Gravitationable> elements;
     private Random rnd;
     private Pair<Double, Double> boundsX;

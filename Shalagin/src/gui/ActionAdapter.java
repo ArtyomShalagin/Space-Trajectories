@@ -14,14 +14,16 @@ public class ActionAdapter implements ActionListener, ChangeListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        v.drawPanel.repaint();
+        v.repaint();
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource().equals(v.observableSlider)) {
             v.observableSpaceSize = ((double) v.observableSlider.getValue()) * 1e6;
-            v.drawPanel.repaint();
+            v.repaint();
+        } else if (e.getSource().equals(v.speedSlider)) {
+            v.dynamicStep = v.speedSlider.getValue();
         }
     }
 }
