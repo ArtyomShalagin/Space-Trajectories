@@ -21,16 +21,6 @@ public class PlanetMap implements Serializable {
         boundsZ = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
     }
 
-    public void generateRandom(int seed, int n) {
-        rnd = new Random(seed);
-        for (int i = 0; i < n; i++) {
-            Planet p = new Planet(rnd.nextDouble() * 400000000,
-                    rnd.nextDouble() * 400000000, 0, rnd.nextDouble() * 6 * 1e24, 1e4, true, i);
-            rebound(p);
-            elements.add(p);
-        }
-    }
-
     public void add(Planet p) {
         rebound(p);
         elements.add(p);

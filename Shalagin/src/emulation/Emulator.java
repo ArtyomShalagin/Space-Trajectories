@@ -1,6 +1,7 @@
 package emulation;
 
 import data.*;
+import data_struct.Vec;
 import flanagan.integration.DerivnFunction;
 import flanagan.integration.RungeKutta;
 
@@ -9,12 +10,8 @@ import static java.lang.Math.*;
 public class Emulator {
 
     private static void setResult(Gravitationable g, double[] y) {
-        g.setX(y[0]);
-        g.setY(y[1]);
-        g.setZ(y[2]);
-        g.setVX(y[3]);
-        g.setVY(y[4]);
-        g.setVZ(y[5]);
+        g.setCoords(new Vec(y[0], y[1], y[2]));
+        g.setSpeed(new Vec(y[3], y[4], y[5]));
     }
 
     private static RungeKutta setRungeKutta(double x0, double xn, double[] initial, double step) {
@@ -29,8 +26,8 @@ public class Emulator {
 
     private static void calc(PlanetMap map, Gravitationable g, double currTime, double step) {
         Derivn der = new Derivn(map, g);
-        double[] initial = {g.getX(), g.getY(), g.getZ(),
-                g.getVX(), g.getVY(), g.getVZ()};
+        double[] initial = {g.getCoords().getX(), g.getCoords().getY(), g.getCoords().getZ(),
+                g.getSpeed().getX(), g.getSpeed().getY(), g.getSpeed().getZ()};
         RungeKutta rk = setRungeKutta(currTime, currTime + step, initial, step);
         double[] result = rk.fourthOrder(der);
         setResult(g, result);
@@ -51,13 +48,8 @@ public class Emulator {
     }
 
     private static boolean collided(Gravitationable g1, Gravitationable g2) {
-        double dist = dist(g1.getCoords(), g2.getCoords());
+        double dist = g1.getCoords().dist(g2.getCoords());
         return dist < g1.getRad() + g2.getRad();
-    }
-
-    private static double dist(double[] x1, double[] x2) {
-        return sqrt(pow(x1[0] - x2[0], 2) + pow(x1[1] - x2[1], 2)
-                + pow(x1[2] - x2[2], 2));
     }
 
     public static EmulationReport emulate(PlanetMap map, long steps, double step) {
@@ -147,9 +139,9 @@ public class Emulator {
                 if (p.equals(curr)) {
                     continue;
                 }
-                double dx = var[0] - p.getCoords()[0];
-                double dy = var[1] - p.getCoords()[1];
-                double dz = var[2] - p.getCoords()[2];
+                double dx = var[0] - p.getCoords().getX();
+                double dy = var[1] - p.getCoords().getY();
+                double dz = var[2] - p.getCoords().getZ();
                 double rad = dx * dx + dy * dy + dz * dz;
                 deriv[3] -= projX(dx, dy, dz, Const.G * p.getMass() / rad);
                 deriv[4] -= projY(dx, dy, dz, Const.G * p.getMass() / rad);

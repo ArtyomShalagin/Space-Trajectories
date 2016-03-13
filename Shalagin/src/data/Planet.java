@@ -1,52 +1,49 @@
 package data;
 
-import data_struct.Triple;
+import data_struct.Vec;
 
 import java.io.Serializable;
 
 public class Planet implements Gravitationable, Serializable {
 
-    private Triple coords;
-    private Triple speed;
+    private Vec coords;
+    private Vec speed;
     private double mass, rad;
     private boolean isMovable, collided;
     private int id;
 
-    public Planet(double x, double y, double z, double mass,
-                  double rad, boolean isMovable, int id) {
-        init(x, y, z, mass, rad, isMovable, id);
+    public Planet(Vec coords, double mass, double rad, boolean isMovable, int id) {
+        init(coords, mass, rad, isMovable, id);
     }
 
-    public Planet(double x, double y, double z, double mass, double rad, double vx,
-                  double vy, double vz, boolean isMovable, int id) {
-        init(x, y, z, mass, rad, isMovable, id);
-        speed = new Triple(vx, vy, vz);
+    public Planet(Vec coords, double mass, double rad, Vec speed, boolean isMovable, int id) {
+        init(coords, mass, rad, isMovable, id);
+        this.speed = speed;
     }
 
-    private void init(double x, double y, double z, double mass,
-                      double rad, boolean isMovable, int id) {
-        coords = new Triple(x, y, z);
+    private void init(Vec coords, double mass, double rad, boolean isMovable, int id) {
+        this.coords = coords;
         this.mass = mass;
         this.isMovable = isMovable;
-        speed = new Triple(0, 0, 0);
+        speed = new Vec(0, 0, 0);
         this.id = id;
         this.rad = rad;
     }
 
-    public double getX() {
-        return coords.get()[0];
+    public Vec getCoords() {
+        return coords;
     }
 
-    public double getY() {
-        return coords.get()[1];
+    public Vec getSpeed() {
+        return speed;
     }
 
-    public double getZ() {
-        return coords.get()[2];
+    public void setCoords(Vec coords) {
+        this.coords = coords;
     }
 
-    public double[] getCoords() {
-        return coords.get();
+    public void setSpeed(Vec speed) {
+        this.speed = speed;
     }
 
     public double getMass() {
@@ -55,50 +52,6 @@ public class Planet implements Gravitationable, Serializable {
 
     public double getRad() {
         return rad;
-    }
-
-    public void setX(double x) {
-        coords.get()[0] = x;
-    }
-
-    public void setY(double y) {
-        coords.get()[1] = y;
-    }
-
-    public void setZ(double z) {
-        coords.get()[2] = z;
-    }
-
-    public double getVX() {
-        return speed.get()[0];
-    }
-
-    public double getVY() {
-        return speed.get()[1];
-    }
-
-    public double getVZ() {
-        return speed.get()[2];
-    }
-
-    public void setVX(double vx) {
-        speed.get()[0] = vx;
-    }
-
-    public void setVY(double vy) {
-        speed.get()[1] = vy;
-    }
-
-    public void setVZ(double vz) {
-        speed.get()[2] = vz;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
-    public void setMovable(boolean isMovable) {
-        this.isMovable = isMovable;
     }
 
     public boolean isMovable() {

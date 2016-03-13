@@ -2,6 +2,7 @@ package io;
 
 import data.Planet;
 import data.PlanetMap;
+import data_struct.Vec;
 import emulation.EmulationReport;
 
 import java.io.File;
@@ -23,7 +24,8 @@ public class Reader {
                 double vx = sc.nextDouble();
                 double vy = sc.nextDouble();
                 double vz = sc.nextDouble();
-                map.add(new Planet(x, y, z, mass, rad, vx, vy, vz, sc.nextBoolean(), id++));
+                map.add(new Planet(new Vec(x, y, z), mass, rad,
+                        new Vec(vx, vy, vz), sc.nextBoolean(), id++));
             }
             sc.close();
         } catch (IOException e) {

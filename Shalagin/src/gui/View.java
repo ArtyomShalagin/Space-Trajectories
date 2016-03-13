@@ -1,20 +1,12 @@
 package gui;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import data.*;
 import data_struct.Pair;
-import data_struct.Triple;
+import data_struct.Vec;
 import emulation.EmulationReport;
-import emulation.Emulator;
-import io.Logger;
-import io.Reader;
-import io.Scanner;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class View {
 
@@ -71,7 +63,7 @@ public class View {
         speedSlider.setMaximum(1000);
         speedSlider.setValue(dynamicStep);
         speedSlider.addChangeListener(adapter);
-//
+
 //        playButton = new JButton("Play");
 //        settingsPanel.add(playButton);
 //        playButton.setBounds(width * 2 / 3, 15, width / 3 - 20, 20);
@@ -98,10 +90,10 @@ public class View {
     }
 
     private void drawStaticTraj(Graphics g) {
-//        if (rep == null) {
-//            g.drawString("Emulation not ready...", width / 2 - 30, height / 2);
-//            return;
-//        }
+        if (rep == null) {
+            g.drawString("Emulation not ready...", width / 2 - 30, height / 2);
+            return;
+        }
 
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, width, height);
@@ -167,15 +159,13 @@ public class View {
 
     protected void drawTrajectories(EmulationReport rep, Graphics g) {
         Pair<Double, Double> zVal = getMaxZ(rep);
-        double dif = zVal.get2() - zVal.get1();
         double maxR = Double.MIN_VALUE, minR = Double.MAX_VALUE;
         for (Gravitationable gr : rep.getElements()) {
-            for (Triple p : rep.getTrajectory(gr).getPoints()) {
-                double[] c = p.get();
-                g.setColor(new Color(Math.min((int) (255. * (c[2] - zVal.get1()) / dif), 255), 0, 0));
-                g.fillOval(resize(c[0], 0), resize(c[1], 1), 1, 2);
+            for (Vec p : rep.getTrajectory(gr).getPoints()) {
+                g.setColor(getColor(zVal, p.getZ()));
+                g.fillOval(resize(p.getX(), 0), resize(p.getY(), 1), 1, 2);
 
-                double r = Math.sqrt(c[0] * c[0] + c[1] * c[1] + c[2] * c[2]);
+                double r = p.module();
                 minR = Math.min(r, minR);
                 maxR = Math.max(r, maxR);
             }
@@ -183,13 +173,19 @@ public class View {
 //        System.out.println("min R = " + minR + ", max R = " + maxR);
     }
 
+    //sets color from black to red depending on Z coord
+    private Color getColor(Pair<Double, Double> zVal, double z) {
+        double dif = zVal.get2() - zVal.get1();
+        int red = Math.min((int) (255. * (z - zVal.get1()) / dif), 255);
+        return new Color(red, 0, 0);
+    }
+
     private Pair<Double, Double> getMaxZ(EmulationReport rep) {
         double minz = Double.MAX_VALUE, maxz = Double.MIN_VALUE;
         for (Gravitationable gr : rep.getElements()) {
-            for (Triple p : rep.getTrajectory(gr).getPoints()) {
-                double[] c = p.get();
-                maxz = Math.max(maxz, c[2]);
-                minz = Math.min(minz, c[2]);
+            for (Vec p : rep.getTrajectory(gr).getPoints()) {
+                maxz = Math.max(maxz, p.getZ());
+                minz = Math.min(minz, p.getZ());
             }
         }
         return new Pair<>(minz, maxz);
@@ -201,8 +197,8 @@ public class View {
             if (!p.isMovable()) {
                 g.setColor(Color.BLUE);
                 int size = resize(p.getRad() * 2, 0) - width / 2;
-                g.fillOval(resize(p.getX(), 0) - size / 2,
-                        resize(p.getY(), 1) - size / 2, size, size);
+                g.fillOval(resize(p.getCoords().getX(), 0) - size / 2,
+                        resize(p.getCoords().getY(), 1) - size / 2, size, size);
             }
         });
     }

@@ -1,12 +1,12 @@
 package data;
 
-import data_struct.Triple;
+import data_struct.Vec;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Trajectory implements Serializable {
-    private ArrayList<Triple> traj;
+    private ArrayList<Vec> traj;
     private ArrayList< Double > times;
 
     public Trajectory() {
@@ -15,17 +15,14 @@ public class Trajectory implements Serializable {
     }
 
     public void add(double x, double y, double z) {
-        traj.add(new Triple(x, y, z));
+        traj.add(new Vec(x, y, z));
     }
 
-    public void add(double[] coord) {
-        if (coord.length != 3) {
-            throw new IllegalArgumentException("Coord length must be 3");
-        }
-        traj.add(new Triple(coord));
+    public void add(Vec coord) {
+        traj.add(coord);
     }
 
-    public ArrayList< Triple > getPoints() {
+    public ArrayList< Vec > getPoints() {
         return traj;
     }
 

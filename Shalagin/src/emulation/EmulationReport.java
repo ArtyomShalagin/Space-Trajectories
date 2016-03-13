@@ -4,6 +4,7 @@ import data.Gravitationable;
 import data.Planet;
 import data.PlanetMap;
 import data.Trajectory;
+import data_struct.Vec;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,14 +29,9 @@ public class EmulationReport implements Serializable {
         });
     }
 
-    public void add(Gravitationable g, double[] coord) {
+    public void add(Gravitationable g, Vec coord) {
         Trajectory tr = map.get(g);
         tr.add(coord);
-    }
-
-    public void add(Gravitationable g, double x, double y, double z) {
-        Trajectory tr = map.get(g);
-        tr.add(x, y, z);
     }
 
     public PlanetMap getPlanetMap() {
