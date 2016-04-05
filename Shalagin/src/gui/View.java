@@ -21,6 +21,7 @@ public class View {
     ActionAdapter adapter;
 
     EmulationReport rep;
+    Vec[] stars;
 
     PaintingType state;
 
@@ -113,23 +114,44 @@ public class View {
         for (Gravitationable grav : rep.getElements()) {
             //in case of collision trajectory may be short
             if (rep.getTrajectory(grav).size() > dynamicDrawingInd) {
-                double[] coord = rep.getTrajectory(grav).getPoint(dynamicDrawingInd);
+                Vec coord = rep.getTrajectory(grav).getPoint(dynamicDrawingInd);
                 int size = resize(grav.getRad() * 2, 0) - width / 2;
                 size = Math.max(size, 5);
-                g.setColor(new Color(
-                        Math.min((int) (255. * (coord[2] - zVal.get1()) / dif), 255), 0, 0));
-                g.fillOval(resize(coord[0], 0) - size / 2,
-                        resize(coord[1], 1) - size / 2, size, size);
-                int bound = 5000;
+                g.setColor(getColor(zVal, coord.getZ()));
+                g.fillOval(resize(coord.getX(), 0) - size / 2,
+                        resize(coord.getY(), 1) - size / 2, size, size);
+                int bound = 5000; //how many points to draw
                 for (int i = dynamicDrawingInd;
                      i >= Math.max(dynamicDrawingInd - bound, 0);
                      i -= Math.max(dynamicStep / 10, 1)) {
                     coord = rep.getTrajectory(grav).getPoint(i);
-                    g.fillOval(resize(coord[0], 0), resize(coord[1], 1), 1, 2);
+                    g.fillOval(resize(coord.getX(), 0), resize(coord.getY(), 1), 1, 2);
                 }
             }
         }
+        if (rep.getCaptures().size() > dynamicDrawingInd) {
+            for (Vec v : rep.getCaptures().get(dynamicDrawingInd)) {
+                int x = 0, y = 0;
+                for (Gravitationable grav : rep.getPlanetMap().getShips()) {
+                    Trajectory tr = rep.getTrajectory(grav);
+                    if (tr.size() > dynamicDrawingInd) {
+                        x += resize(tr.getPoint(dynamicDrawingInd).getX(), 0) - width / 2;
+                        y += resize(tr.getPoint(dynamicDrawingInd).getY(), 0) - width / 2;
+                    }
+                }
+                x /= 3;
+                y /= 3;
+                g.drawLine(width / 2 + x, width / 2 + y, width / 2 + (int) (v.getX() * 1e8),
+                        width / 2 - (int) (v.getY() * 1e8));
+            }
+        }
+    }
 
+    protected void drawStars(Graphics g) {
+        for (Vec v : stars) {
+            g.drawLine(width / 2, width / 2, width / 2 + (int) (v.getX() * 1e8),
+                    width / 2 - (int) (v.getY() * 1e8));
+        }
     }
 
     protected void redraw(Graphics g) {
@@ -143,6 +165,7 @@ public class View {
         } else if (state == PaintingType.DYNAMIC) {
             drawDynamicTraj(g);
         }
+//        drawStars(g);
     }
 
     protected void repaint() {
@@ -211,12 +234,11 @@ public class View {
         double max = observableSpaceSize;
 
         double dif = max - min;
-        int result = (int) (screenSize * (coord - min) / dif);
 
-        return result;
+        return (int) (screenSize * (coord - min) / dif);
     }
 
     private enum PaintingType {
-        STATIC, DYNAMIC;
+        STATIC, DYNAMIC
     }
 }

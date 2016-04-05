@@ -15,12 +15,14 @@ public class EmulationReport implements Serializable {
 
     private ArrayList<Gravitationable> elements;
     private HashMap<Gravitationable, Trajectory> map;
+    private ArrayList<Vec[]> starCaptures;
     private PlanetMap planetMap;
 
     public EmulationReport(PlanetMap m) {
         planetMap = m;
         elements = new ArrayList<>();
         map = new HashMap<>();
+        starCaptures = new ArrayList<>();
         m.getElements().forEach(g -> {
             if (g.isMovable()) {
                 elements.add(g);
@@ -46,4 +48,11 @@ public class EmulationReport implements Serializable {
         return map.get(g);
     }
 
+    public void addCapture(Vec[] captures) {
+        starCaptures.add(captures);
+    }
+
+    public ArrayList<Vec[]> getCaptures() {
+        return starCaptures;
+    }
 }

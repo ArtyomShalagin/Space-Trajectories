@@ -1,6 +1,7 @@
 *.pmap
 *.traj
 *.png
+*.txt
 out/*
 rep/*
 settings

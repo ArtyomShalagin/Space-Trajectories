@@ -2,6 +2,7 @@ package gui;
 
 import data.PlanetMap;
 import data.Ship;
+import data_struct.Vec;
 import emulation.EmulationReport;
 import emulation.Emulator;
 import io.Logger;
@@ -16,10 +17,10 @@ import java.io.IOException;
 
 public class Control {
     View v;
-    Model m;
     Timer updateTimer;
 
     PlanetMap map;
+    Vec[] stars;
     Ship ship;
     EmulationReport rep;
 
@@ -28,10 +29,11 @@ public class Control {
 
     public void start() {
         v = new View();
-        m = new Model();
         initData();
         v.init();
         emulate();
+//        rep = Reader.readReport("rep_16.2_6:11:18.rep");
+//        System.out.println("done");
         v.rep = rep;
 //        v.setStatic();
 //        v.repaint();
@@ -41,7 +43,7 @@ public class Control {
     }
 
     private void emulate() {
-        rep = Emulator.emulate(map, numberOfSteps, stepLength);
+        rep = Emulator.emulate(map, v.stars, numberOfSteps, stepLength);
         BufferedImage image = new BufferedImage(v.width, v.height,
                 BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
@@ -65,6 +67,7 @@ public class Control {
             e.printStackTrace();
         }
         Reader.read(filename, map);
+        v.stars = Reader.readStars(new File("radio.txt"));
         v.adapter = new ActionAdapter(v);
     }
 }

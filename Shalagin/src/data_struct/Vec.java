@@ -3,6 +3,7 @@ package data_struct;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import static java.lang.Math.acos;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -36,13 +37,34 @@ public class Vec implements Serializable {
         return coords[2];
     }
 
-    public double dist(Vec x) {
-        return sqrt(pow(getX() - x.getX(), 2) + pow(getY() - x.getY(), 2)
-                + pow(getZ() - x.getZ(), 2));
+    public Vec minus(Vec v) {
+        return new Vec(getX() - v.getX(), getY() - v.getY(), getZ() - v.getZ());
     }
 
     public double module() {
-        return Math.sqrt(getX() * getX() + getY() * getY() + getZ() * getZ());
+//        return Math.sqrt(getX() * getX() + getY() * getY() + getZ() * getZ());
+        return sqrt(scalarMult(this, this));
+    }
+
+    public static double dist(Vec x1, Vec x2) {
+        return sqrt(pow(x1.getX() - x2.getX(), 2) + pow(x1.getY() - x2.getY(), 2)
+                + pow(x1.getZ() - x2.getZ(), 2));
+    }
+
+    public static double scalarMult(Vec x1, Vec x2) {
+        return x1.getX() * x2.getX() + x1.getY() * x2.getY() + x1.getZ() * x2.getZ();
+    }
+
+    public static Vec vecMult(Vec x1, Vec x2) {
+        double x = x1.getY() * x2.getZ() - x1.getZ() * x2.getY();
+        double y = x1.getZ() * x2.getX() - x1.getX() * x2.getZ();
+        double z = x1.getX() * x2.getY() - x1.getY() * x2.getX();
+
+        return new Vec(x, y, z);
+    }
+
+    public static double angle(Vec x1, Vec x2) {
+        return acos(scalarMult(x1, x2) / (x1.module() * x2.module()));
     }
 
     public Vec clone() {

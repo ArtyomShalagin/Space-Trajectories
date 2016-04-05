@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Trajectory implements Serializable {
-    private ArrayList<Vec> traj;
+    private ArrayList< Vec > traj;
     private ArrayList< Double > times;
 
     public Trajectory() {
@@ -26,8 +26,8 @@ public class Trajectory implements Serializable {
         return traj;
     }
 
-    public double[] getPoint(int ind) {
-        return traj.get(ind).get();
+    public Vec getPoint(int ind) {
+        return traj.get(ind);
     }
 
     public int size() {
@@ -35,10 +35,7 @@ public class Trajectory implements Serializable {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof Trajectory) {
-            return equals((Trajectory) o);
-        }
-        return false;
+        return o instanceof Trajectory && equals((Trajectory) o);
     }
 
     public boolean equals(Trajectory t) {

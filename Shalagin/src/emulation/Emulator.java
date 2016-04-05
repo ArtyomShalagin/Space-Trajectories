@@ -2,12 +2,16 @@ package emulation;
 
 import data.*;
 import data_struct.Vec;
-import flanagan.integration.DerivnFunction;
 import flanagan.integration.RungeKutta;
+
+import java.util.ArrayList;
 
 import static java.lang.Math.*;
 
 public class Emulator {
+
+    private static int timeout = 0;
+    private static int wins = 0;
 
     private static void setResult(Gravitationable g, double[] y) {
         g.setCoords(new Vec(y[0], y[1], y[2]));
@@ -48,37 +52,63 @@ public class Emulator {
     }
 
     private static boolean collided(Gravitationable g1, Gravitationable g2) {
-        double dist = g1.getCoords().dist(g2.getCoords());
+        double dist = Vec.dist(g1.getCoords(), g2.getCoords());
         return dist < g1.getRad() + g2.getRad();
     }
 
-    public static EmulationReport emulate(PlanetMap map, long steps, double step) {
+    private static Vec[] checkStars(PlanetMap map, Vec[] stars) {
+        if (map.getShips().size() < 3) {
+            return new Vec[]{};
+        }
+        ArrayList<Vec> captures = new ArrayList<>();
+        for (int i1 = 0; i1 < map.getShips().size(); i1++) {
+            for (int i2 = i1 + 1; i2 < map.getShips().size(); i2++) {
+                for (int i3 = i2 + 1; i3 < map.getShips().size(); i3++) {
+                    Vec v1 = map.getShips().get(i1).getCoords();
+                    Vec v2 = map.getShips().get(i2).getCoords();
+                    Vec v3 = map.getShips().get(i3).getCoords();
+                    Vec perp = Vec.vecMult(v1.minus(v2), v1.minus(v3));
+                    for (Vec v : stars) {
+                        double angle = Vec.angle(perp, v);
+                        if (angle < PI / 500) {
+                            captures.add(v);
+                        }
+                    }
+                }
+            }
+        }
+        Vec[] ans = new Vec[captures.size()];
+        for (int i = 0; i < captures.size(); i++) {
+            ans[i] = captures.get(i);
+        }
+
+        return ans;
+    }
+
+    public static EmulationReport emulate(PlanetMap map, Vec[] stars, long steps, double step) {
         long start = System.currentTimeMillis();
 
         EmulationReport rep = new EmulationReport(map);
-//        long steps = 5500000000L;
-//        double distBetweenPoints = 100000;
         long numberOfPoints = 100000;
         long distBetweenPoints = max(steps / numberOfPoints, 1);
         double currTime = 0;
         for (long i = 0; i < steps; i++) {
             checkCollisions(map);
+            if (i % 10 == 0) {
+                Vec[] captures = checkStars(map, stars);
+                if (timeout <= 0 && captures.length > 0) {
+                    rep.addCapture(captures);
+                    timeout = 21600;
+                    wins += captures.length;
+                } else {
+                    timeout -= distBetweenPoints;
+                }
+            }
             for (Gravitationable g : rep.getElements()) {
                 if (g.collided()) {
                     continue;
                 }
                 calc(map, g, currTime, step);
-
-//                double dist;
-//                if (rep.getTrajectory(g).size() != 0) {
-//                    dist = dist(g.getCoords(), rep.getTrajectory(g).
-//                            getPoint(rep.getTrajectory(g).size() - 1));
-//                } else {
-//                    dist = Double.MAX_VALUE;
-//                }
-//                if (dist > distBetweenPoints) {
-//                    rep.add(g, g.getCoords().clone());
-//                }
 
                 if (i % distBetweenPoints == 0) {
                     rep.add(g, g.getCoords().clone());
@@ -95,61 +125,9 @@ public class Emulator {
 
         System.out.println("Done " + steps + " steps in " +
                 (System.currentTimeMillis() - start) / 1000 + "s");
+        System.out.println(wins + " captures in " +
+                steps * step / (60 * 60 * 24) + " days");
 
         return rep;
     }
-
-    //class to count values of derivations
-    private static class Derivn implements DerivnFunction {
-
-        private PlanetMap map;
-        private Gravitationable curr;
-
-        public Derivn(PlanetMap map, Gravitationable curr) {
-            this.map = map;
-            this.curr = curr;
-        }
-
-        private double proj(double ax, double ay, double az, double rad) {
-            double c = ax / sqrt(ax * ax + ay * ay + az * az);
-
-            return rad * c;
-        }
-
-        private double projX(double ax, double ay, double az, double rad) {
-            return proj(ax, ay, az, rad);
-        }
-
-        private double projY(double ax, double ay, double az, double rad) {
-            return proj(ay, az, ax, rad);
-        }
-
-        private double projZ(double ax, double ay, double az, double rad) {
-            return proj(az, ax, ay, rad);
-        }
-
-        //main counting method
-        public double[] derivn(double t, double[] var) {
-            double[] deriv = new double[var.length];
-            //first 3 derivs are coord' = speed, speed is last 3 var args
-            deriv[0] = var[3];
-            deriv[1] = var[4];
-            deriv[2] = var[5];
-            for (Gravitationable p : map.getElements()) {
-                if (p.equals(curr)) {
-                    continue;
-                }
-                double dx = var[0] - p.getCoords().getX();
-                double dy = var[1] - p.getCoords().getY();
-                double dz = var[2] - p.getCoords().getZ();
-                double rad = dx * dx + dy * dy + dz * dz;
-                deriv[3] -= projX(dx, dy, dz, Const.G * p.getMass() / rad);
-                deriv[4] -= projY(dx, dy, dz, Const.G * p.getMass() / rad);
-                deriv[5] -= projZ(dx, dy, dz, Const.G * p.getMass() / rad);
-            }
-
-            return deriv;
-        }
-    }
-
 }

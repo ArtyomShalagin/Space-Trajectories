@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlanetMap implements Serializable {
+    private ArrayList<Gravitationable> planets;
+    private ArrayList<Gravitationable> ships;
     private ArrayList<Gravitationable> elements;
     private Random rnd;
     private Pair<Double, Double> boundsX;
@@ -15,27 +17,43 @@ public class PlanetMap implements Serializable {
 
     public PlanetMap() {
         elements = new ArrayList<>();
+        planets = new ArrayList<>();
+        ships = new ArrayList<>();
         rnd = new Random();
         boundsX = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
         boundsY = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
         boundsZ = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
     }
 
-    public void add(Planet p) {
+    public void addPlanet(Planet p) {
         rebound(p);
+        planets.add(p);
         elements.add(p);
     }
 
-    public void set(int ind, Planet p) {
-        if (ind >= elements.size()) {
-            throw new IndexOutOfBoundsException("Index bigger than amount of elements");
-        }
-        rebound(p);
-        elements.set(ind, p);
+    public void setPlanets(ArrayList<Gravitationable> planets) {
+        elements.removeAll(this.planets);
+        this.planets = planets;
+        elements.addAll(this.planets);
     }
 
-    public void set(ArrayList<Gravitationable> newelements) {
-        elements = newelements;
+    public ArrayList<Gravitationable> getPlanets() {
+        return planets;
+    }
+
+    public void addShip(Ship s) {
+        ships.add(s);
+        elements.add(s);
+    }
+
+    public void setShips(ArrayList<Gravitationable> ships) {
+        elements.removeAll(this.ships);
+        this.ships = ships;
+        elements.addAll(this.ships);
+    }
+
+    public ArrayList<Gravitationable> getShips() {
+        return ships;
     }
 
     public ArrayList<Gravitationable> getElements() {
@@ -68,20 +86,18 @@ public class PlanetMap implements Serializable {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof PlanetMap)
-            return equals((PlanetMap) o);
-        return false;
+        return o instanceof PlanetMap && equals((PlanetMap) o);
     }
 
     public boolean equals(PlanetMap p) {
-        return elements.equals(p.elements);
+        return planets.equals(p.planets) && ships.equals(p.ships);
     }
 
     public int hashCode() {
-        return elements.hashCode() * 87424 + rnd.hashCode() * 63152;
+        return planets.hashCode() * 87424 + ships.hashCode() * 63152;
     }
 
     public String toString() {
-        return elements.toString();
+        return planets.toString() + " " + ships.toString();
     }
 }
