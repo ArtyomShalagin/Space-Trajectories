@@ -5,10 +5,12 @@ import data_struct.Vec;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Ship extends SpaceObject {
     private ArrayList<Vec> thrust;
     private long totalSteps, doneSteps;
+    private Vec startSpeed;
 
     public Ship(Vec coords, double mass, double rad, boolean isMovable, int id) {
         init(coords, mass, rad, new Vec(0, 0, 0), isMovable, id);
@@ -16,7 +18,7 @@ public class Ship extends SpaceObject {
 
     public Ship(Vec coords, double mass, double rad, Vec speed, boolean isMovable, int id) {
         init(coords, mass, rad, speed, isMovable, id);
-        thrust = new ArrayList<>(Arrays.asList(new Vec(0, 0, 0)));
+        thrust = new ArrayList<>(Collections.singletonList(new Vec(0, 0, 0)));
     }
 
     public void setThrust(ArrayList<Vec> thrust) {
@@ -30,6 +32,14 @@ public class Ship extends SpaceObject {
 
     public void setDoneSteps(long doneSteps) {
         this.doneSteps = doneSteps;
+    }
+
+    public void setStartSpeed(Vec startSpeed) {
+        this.startSpeed = startSpeed;
+    }
+
+    public Vec getStartSpeed() {
+        return startSpeed;
     }
 
     /**
@@ -59,6 +69,7 @@ public class Ship extends SpaceObject {
                 getSpeed().clone(), isMovable(), getId());
         ans.setTotalSteps(totalSteps);
         ans.setDoneSteps(doneSteps);
+        ans.setStartSpeed(startSpeed.clone());
         ArrayList<Vec> thrustCopy = new ArrayList<>();
         if (thrust != null) {
             for (Vec v : thrust) {

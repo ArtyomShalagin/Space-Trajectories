@@ -32,8 +32,11 @@ public class Reader {
                 switch (type) {
                     case "planet" : map.addPlanet(new Planet(new Vec(x, y, z), mass, rad,
                             new Vec(vx, vy, vz), sc.nextBoolean(), id++)); break;
-                    case "ship" : map.addShip(new Ship(new Vec(x, y, z), mass, rad,
-                            new Vec(vx, vy, vz), sc.nextBoolean(), id++));
+                    case "ship" :
+                        Ship ship = new Ship(new Vec(x, y, z), mass, rad,
+                                new Vec(vx, vy, vz), sc.nextBoolean(), id++);
+                        ship.setStartSpeed(ship.getSpeed().clone());
+                        map.addShip(ship);
                 }
             }
             sc.close();

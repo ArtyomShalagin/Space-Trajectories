@@ -12,6 +12,7 @@ import java.util.Random;
 
 public class Genetic {
     private static Random rnd = new Random(239566);
+    private static int size = 1000;
 
     public static ArrayList<Vec> generateRandom(int size) {
         ArrayList<Vec> ans = new ArrayList<>();
@@ -30,30 +31,33 @@ public class Genetic {
     }
 
     public static EmulationReport onePlusOne(PlanetMap map, Vec[] stars, long steps, double step, int generations) {
-        int size = 1000;
         int best = -1;
         EmulationReport bestRep = null;
-        ArrayList<ArrayList<Vec>> curr = new ArrayList<>();
         for (Ship ship : map.getShips()) {
             ArrayList<Vec> thrust = generateRandom(size);
-            curr.add(thrust);
             ship.setThrust(thrust);
         }
         for (int gen = 0; gen < generations; gen++) {
             System.out.println("Starting generation " + gen);
+            PlanetMap newMap = map.clone();
             int changeInd = rnd.nextInt(map.getShips().size());
-            ArrayList<Vec> newAns = generateRandom(size);
-            ArrayList<Vec> oldAns = curr.get(changeInd);
-            map.getShips().get(changeInd).setThrust(newAns);
-            EmulationReport rep = new Emulator().emulate(map.clone(), stars, steps, step);
+            if (rnd.nextInt(2) == 0) { //change start speed
+                double speedBound = 3000;
+                Vec newSpeed = new Vec(rnd.nextDouble() * speedBound,
+                        rnd.nextDouble() * speedBound, rnd.nextDouble() * speedBound);
+                newMap.getShips().get(changeInd).setStartSpeed(newSpeed);
+            } else { //change thrust vec
+                ArrayList<Vec> newAns = generateRandom(size);
+                newMap.getShips().get(changeInd).setThrust(newAns);
+            }
+            EmulationReport rep = new Emulator().emulate(newMap.clone(), stars, steps, step);
+
             int newRes = FitnessFunction.fitness(rep);
             if (newRes > best) {
                 System.out.println("Found new best " + newRes);
                 best = newRes;
                 bestRep = rep;
-                curr.set(changeInd, newAns);
-            } else {
-                map.getShips().get(changeInd).setThrust(oldAns);
+                map = newMap;
             }
         }
 

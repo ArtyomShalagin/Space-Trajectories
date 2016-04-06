@@ -1,10 +1,6 @@
-import data.Gravitationable;
 import data.PlanetMap;
-import data.Ship;
 import data_struct.Vec;
 import emulation.EmulationReport;
-import emulation.Emulator;
-import gui.Control;
 import io.Logger;
 import io.Reader;
 import io.Scanner;
