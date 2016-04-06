@@ -56,6 +56,10 @@ public abstract class SpaceObject implements Gravitationable, Serializable {
         collided = true;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public boolean equals(Object o) {
         if (o instanceof SpaceObject)
             return equals((SpaceObject) o);

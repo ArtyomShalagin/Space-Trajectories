@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PlanetMap implements Serializable {
-    private ArrayList<Gravitationable> planets;
-    private ArrayList<Gravitationable> ships;
+    private ArrayList<Planet> planets;
+    private ArrayList<Ship> ships;
     private ArrayList<Gravitationable> elements;
     private Random rnd;
     private Pair<Double, Double> boundsX;
@@ -19,25 +19,24 @@ public class PlanetMap implements Serializable {
         elements = new ArrayList<>();
         planets = new ArrayList<>();
         ships = new ArrayList<>();
-        rnd = new Random();
+        rnd = new Random(566239);
         boundsX = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
         boundsY = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
         boundsZ = new Pair<>(Double.MAX_VALUE, Double.MIN_VALUE);
     }
 
     public void addPlanet(Planet p) {
-        rebound(p);
         planets.add(p);
         elements.add(p);
     }
 
-    public void setPlanets(ArrayList<Gravitationable> planets) {
+    public void setPlanets(ArrayList<Planet> planets) {
         elements.removeAll(this.planets);
         this.planets = planets;
         elements.addAll(this.planets);
     }
 
-    public ArrayList<Gravitationable> getPlanets() {
+    public ArrayList<Planet> getPlanets() {
         return planets;
     }
 
@@ -46,13 +45,13 @@ public class PlanetMap implements Serializable {
         elements.add(s);
     }
 
-    public void setShips(ArrayList<Gravitationable> ships) {
+    public void setShips(ArrayList<Ship> ships) {
         elements.removeAll(this.ships);
         this.ships = ships;
         elements.addAll(this.ships);
     }
 
-    public ArrayList<Gravitationable> getShips() {
+    public ArrayList<Ship> getShips() {
         return ships;
     }
 
@@ -72,17 +71,16 @@ public class PlanetMap implements Serializable {
         return boundsZ;
     }
 
-    private void rebound(Planet p) {
-//        boundsX.set1(Math.min(boundsX.get1(), p.getX() * 2));
-//        boundsY.set1(Math.min(boundsY.get1(), p.getY() * 2));
-//        boundsZ.set1(Math.min(boundsZ.get1(), p.getZ() * 2));
-//        boundsX.set2(Math.max(boundsX.get2(), p.getX() * 2));
-//        boundsY.set2(Math.max(boundsY.get2(), p.getY() * 2));
-//        boundsZ.set2(Math.max(boundsZ.get2(), p.getZ() * 2));
-//
-//        boundsX.set1(Math.min(0, boundsX.get1()));
-//        boundsY.set1(Math.min(0, boundsY.get1()));
-//        boundsZ.set1(Math.min(0, boundsZ.get1()));
+    public PlanetMap clone() {
+        PlanetMap ans = new PlanetMap();
+        for (Planet p : planets) {
+            ans.addPlanet(p.clone());
+        }
+        for (Ship ship : ships) {
+            ans.addShip(ship.clone());
+        }
+
+        return ans;
     }
 
     public boolean equals(Object o) {

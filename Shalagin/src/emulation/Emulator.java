@@ -10,15 +10,15 @@ import static java.lang.Math.*;
 
 public class Emulator {
 
-    private static int timeout = 0;
-    private static int wins = 0;
+    private int timeout = 0;
+    private int wins = 0;
 
-    private static void setResult(Gravitationable g, double[] y) {
+    private void setResult(Gravitationable g, double[] y) {
         g.setCoords(new Vec(y[0], y[1], y[2]));
         g.setSpeed(new Vec(y[3], y[4], y[5]));
     }
 
-    private static RungeKutta setRungeKutta(double x0, double xn, double[] initial, double step) {
+    private RungeKutta setRungeKutta(double x0, double xn, double[] initial, double step) {
         RungeKutta rk = new RungeKutta();
         rk.setInitialValueOfX(x0);
         rk.setFinalValueOfX(xn);
@@ -28,7 +28,7 @@ public class Emulator {
         return rk;
     }
 
-    private static void calc(PlanetMap map, Gravitationable g, double currTime, double step) {
+    private void calc(PlanetMap map, Gravitationable g, double currTime, double step) {
         Derivn der = new Derivn(map, g);
         double[] initial = {g.getCoords().getX(), g.getCoords().getY(), g.getCoords().getZ(),
                 g.getSpeed().getX(), g.getSpeed().getY(), g.getSpeed().getZ()};
@@ -37,7 +37,7 @@ public class Emulator {
         setResult(g, result);
     }
 
-    private static void checkCollisions(PlanetMap map) {
+    private void checkCollisions(PlanetMap map) {
         for (Gravitationable g1 : map.getElements()) {
             for (Gravitationable g2 : map.getElements()) {
                 if (g1 == g2) {
@@ -51,12 +51,12 @@ public class Emulator {
         }
     }
 
-    private static boolean collided(Gravitationable g1, Gravitationable g2) {
+    private boolean collided(Gravitationable g1, Gravitationable g2) {
         double dist = Vec.dist(g1.getCoords(), g2.getCoords());
         return dist < g1.getRad() + g2.getRad();
     }
 
-    private static Vec[] checkStars(PlanetMap map, Vec[] stars) {
+    private Vec[] checkStars(PlanetMap map, Vec[] stars) {
         if (map.getShips().size() < 3) {
             return new Vec[]{};
         }
@@ -85,13 +85,16 @@ public class Emulator {
         return ans;
     }
 
-    public static EmulationReport emulate(PlanetMap map, Vec[] stars, long steps, double step) {
+    public EmulationReport emulate(PlanetMap map, Vec[] stars, long steps, double step) {
         long start = System.currentTimeMillis();
 
         EmulationReport rep = new EmulationReport(map);
         long numberOfPoints = 100000;
         long distBetweenPoints = max(steps / numberOfPoints, 1);
         double currTime = 0;
+        for (Ship ship : map.getShips()) {
+            ship.setTotalSteps(steps);
+        }
         for (long i = 0; i < steps; i++) {
             checkCollisions(map);
             if (i % 10 == 0) {
@@ -116,11 +119,11 @@ public class Emulator {
 
                 currTime += step;
             }
-            if (i % max(steps / 20, 1) == 0) {
-                System.out.println("Done " + i + " out of " + steps + ", " +
-                        ((long) ((double) i * 100 / steps)) +
-                        " percent in " + (System.currentTimeMillis() - start) / 1000 + "s");
-            }
+//            if (i % max(steps / 5, 1) == 0) {
+//                System.out.println("Done " + i + " out of " + steps + ", " +
+//                        ((long) ((double) i * 100 / steps)) +
+//                        " percent in " + (System.currentTimeMillis() - start) / 1000 + "s");
+//            }
         }
 
         System.out.println("Done " + steps + " steps in " +

@@ -43,7 +43,7 @@ public class Control {
     }
 
     private void emulate() {
-        rep = Emulator.emulate(map, v.stars, numberOfSteps, stepLength);
+        rep = new Emulator().emulate(map, v.stars, numberOfSteps, stepLength);
         BufferedImage image = new BufferedImage(v.width, v.height,
                 BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
