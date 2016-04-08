@@ -12,6 +12,8 @@ import static java.lang.Math.*;
 
 public class Emulator {
 
+    private long magic = 0;
+
     private int timeout = 0;
     private int wins = 0;
 
@@ -87,10 +89,12 @@ public class Emulator {
                     Vec v1 = map.getShips().get(i1).getCoords();
                     Vec v2 = map.getShips().get(i2).getCoords();
                     Vec v3 = map.getShips().get(i3).getCoords();
-                    Vec perp = Vec.vecMult(v1.minus(v2), v1.minus(v3));
+                    Vec perp1 = Vec.vecMult(v1.minus(v3), v1.minus(v2));
+                    Vec perp2 = Vec.vecMult(v1.minus(v2), v1.minus(v3));
                     for (Vec v : stars) {
-                        double angle = Vec.angle(perp, v);
-                        if (angle < PI / 500) {
+                        double angle1 = Vec.angle(perp1, v);
+                        double angle2 = Vec.angle(perp2, v);
+                        if (angle1 < PI / 500 || angle2 < PI / 500) {
                             captures.add(v);
                         }
                     }
@@ -119,10 +123,10 @@ public class Emulator {
         double collTime = 0, captTime = 0, calcTime = 0;
         double t;
         for (long i = 0; i < steps; i++) {
+            magic = i;
             t = System.currentTimeMillis();
             checkCollisions(map);
             collTime += System.currentTimeMillis() - t;
-//            if (i % 10 == 0) {
             if (timeout <= 0) {
                 t = System.currentTimeMillis();
                 Vec[] captures = checkStars(map, stars);
@@ -136,7 +140,6 @@ public class Emulator {
             } else {
                 timeout -= step;
             }
-//            }
             for (Gravitationable g : rep.getElements()) {
                 if (g.collided()) {
                     continue;

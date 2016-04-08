@@ -12,6 +12,11 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+//        Vec v1 = new Vec(1.0799996972768029E12, 8.399998863242154E8, 4.500796859925989E15);
+//        Vec v2 = new Vec(0.0, 0.0, 4.5E15);
+//        System.out.println(Vec.vecMult(v1, v2));
+//        System.out.println(Vec.angle(v1, v2));
+
         new Control().start();
 //        genetics();
     }

@@ -44,7 +44,6 @@ public class Vec implements Serializable {
     }
 
     public double module() {
-//        return Math.sqrt(getX() * getX() + getY() * getY() + getZ() * getZ());
         return sqrt(scalarMult(this, this));
     }
 
