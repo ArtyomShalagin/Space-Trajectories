@@ -18,7 +18,11 @@ public class Ship extends SpaceObject {
 
     public Ship(Vec coords, double mass, double rad, Vec speed, boolean isMovable, int id) {
         init(coords, mass, rad, speed, isMovable, id);
-        thrust = new ArrayList<>(Collections.singletonList(new Vec(0, 0, 0)));
+        ArrayList<Vec> thrust = new ArrayList<>();
+        for (int i = 0; i < Const.divisionSize; i++) {
+            thrust.add(new Vec(0, 0, 0));
+        }
+        this.thrust = thrust;
     }
 
     public void setThrust(ArrayList<Vec> thrust) {
@@ -40,6 +44,10 @@ public class Ship extends SpaceObject {
 
     public Vec getStartSpeed() {
         return startSpeed;
+    }
+
+    public long getDoneSteps() {
+        return doneSteps;
     }
 
     /**

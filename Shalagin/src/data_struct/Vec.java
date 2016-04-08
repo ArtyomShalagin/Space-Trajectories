@@ -26,6 +26,8 @@ public class Vec implements Serializable {
     }
 
     public double getX() {
+        if (coords == null)
+            System.out.println(get());
         return coords[0];
     }
 

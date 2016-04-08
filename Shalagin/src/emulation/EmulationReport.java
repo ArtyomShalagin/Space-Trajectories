@@ -31,6 +31,10 @@ public class EmulationReport implements Serializable {
         });
     }
 
+    public void setPlanetMap(PlanetMap map) {
+        this.planetMap = map;
+    }
+
     public void add(Gravitationable g, Vec coord) {
         Trajectory tr = map.get(g);
         tr.add(coord);

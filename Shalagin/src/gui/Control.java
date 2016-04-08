@@ -1,5 +1,6 @@
 package gui;
 
+import data.Planet;
 import data.PlanetMap;
 import data.Ship;
 import data_struct.Vec;
@@ -32,7 +33,15 @@ public class Control {
         initData();
         v.init();
         emulate();
-//        rep = Reader.readReport("rep_16.2_6:11:18.rep");
+//        rep = Reader.readReport("rep_8.3_11:9:52.rep");
+
+//        v.rep = rep;
+//        updateTimer = new Timer(100, v.adapter);
+//        v.setDynamic();
+//        updateTimer.start();
+
+//        map = rep.getPlanetMap();
+//        emulate();
 //        System.out.println("done");
         v.rep = rep;
 //        v.setStatic();
@@ -53,6 +62,18 @@ public class Control {
         v.drawTrajectories(rep, g);
         Logger.writeResult(image);
         Logger.writeReport(rep);
+    }
+
+    public static void saveImg(EmulationReport rep, PlanetMap map) {
+        View v = new View();
+        v.init();
+        BufferedImage image = new BufferedImage(v.width, v.height,
+                BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.getGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, v.width, v.height);
+        v.drawTrajectories(rep, g);
+        Logger.writeResult(image);
     }
 
     private void initData() {

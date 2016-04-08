@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Trajectory implements Serializable {
-    private ArrayList< Vec > traj;
-    private ArrayList< Double > times;
+    private ArrayList<Vec> traj;
+    private ArrayList<Double> times;
 
     public Trajectory() {
         traj = new ArrayList<>();
@@ -22,7 +22,7 @@ public class Trajectory implements Serializable {
         traj.add(coord);
     }
 
-    public ArrayList< Vec > getPoints() {
+    public ArrayList<Vec> getPoints() {
         return traj;
     }
 

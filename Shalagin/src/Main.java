@@ -1,6 +1,7 @@
 import data.PlanetMap;
 import data_struct.Vec;
 import emulation.EmulationReport;
+import gui.Control;
 import io.Logger;
 import io.Reader;
 import io.Scanner;
@@ -11,8 +12,11 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-//        new Control().start();
+        new Control().start();
+//        genetics();
+    }
 
+    public static void genetics() {
         System.out.println("Reading data");
         PlanetMap map = new PlanetMap();
         long numberOfSteps = 0;
@@ -31,10 +35,13 @@ public class Main {
         }
         Reader.read(filename, map);
         Vec[] stars = Reader.readStars(new File("radio.txt"));
-        System.out.println("Starting 1+1");
-        EmulationReport rep = Genetic.onePlusOne(map, stars, numberOfSteps, stepLength, generations);
-        System.out.println("Done 1+1");
-        Logger.writeReport(rep);
+//        System.out.println("Starting 1+1");
+//        EmulationReport rep = Genetic.onePlusOne(map, stars, numberOfSteps, stepLength, generations);
+//        System.out.println("Done 1+1");
+        System.out.println("Starting mu+lambda");
+        EmulationReport rep = Genetic.muPlusLambda(map, stars, numberOfSteps, stepLength, generations);
+        System.out.println("Done mu+lambda");
 
+        Logger.writeReport(rep);
     }
 }

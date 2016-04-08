@@ -120,7 +120,7 @@ public class View {
                 g.setColor(getColor(zVal, coord.getZ()));
                 g.fillOval(resize(coord.getX(), 0) - size / 2,
                         resize(coord.getY(), 1) - size / 2, size, size);
-                int bound = 5000; //how many points to draw
+                int bound = 5000; //how many
                 for (int i = dynamicDrawingInd;
                      i >= Math.max(dynamicDrawingInd - bound, 0);
                      i -= Math.max(dynamicStep / 10, 1)) {
@@ -143,6 +143,11 @@ public class View {
                 y /= 3;
                 g.drawLine(width / 2 + x, width / 2 + y, width / 2 + (int) (v.getX() * 1e8),
                         width / 2 - (int) (v.getY() * 1e8));
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
